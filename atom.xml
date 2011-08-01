@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title></title>
+  <link href="http://riteshk.github.com/atom.xml" rel="self"/>
+  <link href="http://riteshk.github.com/"/>
+  <updated>2011-08-01T20:36:00+01:00</updated>
+  <id>http://riteshk.github.com/</id>
+  <author>
+    <name>Ritesh Sinha</name>
+    
+  </author>
+
+  
+  <entry>
+    <title>Quick Twisted ADBAPI Example</title>
+    <link href="http://riteshk.github.com/blog/2011/08/01/quick-twisted-adbapi-example/"/>
+    <updated>2011-08-01T18:42:00+01:00</updated>
+    <id>http://riteshk.github.com/blog/2011/08/01/quick-twisted-adbapi-example</id>
+    <content type="html">&lt;p&gt;I spent a fair amount of time trying to get
+&lt;a href=&quot;&quot; title=&quot;http://twistedmatrix.com/documents/11.0.0/api/twisted.enterprise.adbapi.html&quot;&gt;adbapi&lt;/a&gt; to work. I'm not a
+full time programmer so this might be a slightly stupid and contrived
+example but it works! Using the standard blocking API one would connect
+to a MySQLdb like this.&lt;/p&gt;
+
+&lt;div&gt;&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;Regular DB access - regular.py &lt;/span&gt;&lt;/figcaption&gt;
+ &lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class='line'&gt;1&lt;/span&gt;
+&lt;span class='line'&gt;2&lt;/span&gt;
+&lt;span class='line'&gt;3&lt;/span&gt;
+&lt;span class='line'&gt;4&lt;/span&gt;
+&lt;span class='line'&gt;5&lt;/span&gt;
+&lt;span class='line'&gt;6&lt;/span&gt;
+&lt;span class='line'&gt;7&lt;/span&gt;
+&lt;span class='line'&gt;8&lt;/span&gt;
+&lt;span class='line'&gt;9&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class='code' width='100%'&gt;&lt;pre&gt;&lt;code class='py'&gt;&lt;div class='line'&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;MySQLdb&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;n&quot;&gt;db&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MySQLdb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;connect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;foo&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;passwd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;bar&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;whiz&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;bang&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cursor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;execute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;SELECT id FROM blah&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;n&quot;&gt;rows&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fetchone&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rows&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;ID is &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%s&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;row&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;    &lt;span class=&quot;n&quot;&gt;rows&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fetchone&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;n&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The adbapi way to do this is&lt;/p&gt;
+
+&lt;div&gt;&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;adbapi DB access - adbtest.py &lt;/span&gt;&lt;/figcaption&gt;
+ &lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class='line'&gt;1&lt;/span&gt;
+&lt;span class='line'&gt;2&lt;/span&gt;
+&lt;span class='line'&gt;3&lt;/span&gt;
+&lt;span class='line'&gt;4&lt;/span&gt;
+&lt;span class='line'&gt;5&lt;/span&gt;
+&lt;span class='line'&gt;6&lt;/span&gt;
+&lt;span class='line'&gt;7&lt;/span&gt;
+&lt;span class='line'&gt;8&lt;/span&gt;
+&lt;span class='line'&gt;9&lt;/span&gt;
+&lt;span class='line'&gt;10&lt;/span&gt;
+&lt;span class='line'&gt;11&lt;/span&gt;
+&lt;span class='line'&gt;12&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class='code' width='100%'&gt;&lt;pre&gt;&lt;code class='py'&gt;&lt;div class='line'&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;twisted.enterprise&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;adbapi&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;twisted.internet&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;reactor&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;n&quot;&gt;dbpool&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;adbapi&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ConnectionPool&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;MySQLdb&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;foo&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;passwd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;bar&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;whiz&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;bang&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getstuff&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dbpool&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;runQuery&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;SELECT id FROM blah&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;printresult&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ids&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;item&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ids&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;        &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;item&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;errhandler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Oh Noes&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;n&quot;&gt;getstuff&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;addCallback&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;printresult&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;addErrback&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;errhandler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/div&gt;&lt;div class='line'&gt;&lt;span class=&quot;n&quot;&gt;reactor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/div&gt;
+
+
+
+</content>
+  </entry>
+  
+  <entry>
+    <title>The MIUI ROM</title>
+    <link href="http://riteshk.github.com/blog/2011/07/26/the-miui-rom/"/>
+    <updated>2011-07-26T22:54:00+01:00</updated>
+    <id>http://riteshk.github.com/blog/2011/07/26/the-miui-rom</id>
+    <content type="html">&lt;p&gt;Just installed the &lt;a href=&quot;http://miuiandroid.com/&quot;&gt;MIUI ROM&lt;/a&gt; on my Android
+phone. I'd rooted my phone about 3 days after purchasing it and had been
+running CyanogenMod 7. CyanogenMod is a nice, stable ROM for people who
+want a no frills Android version which is closest to the stock Android
+distribution with a few improvements. On the other hand, the MIUI ROM
+contains lots of improvements over the stock distribution. The stock
+Android interface has been given a complete overhaul with custom theme
+elements that can be applied to almost every aspect of the UI
+(notification area, lockscreen image etc).
+My biggest gripe with CyanogenMod was the ADW launcher which would
+randomly disappear at times after I'd unlocked the phone and swiped
+somewhere on the homescreen. I believe this was a feature in ADW
+launcher but it annoyed me to great lengths as I'd end up losing the
+dialler application from the homescreen.
+The MIUI ROM has an app launcher of its own that is probably &lt;del&gt;a ripoff&lt;/del&gt;
+inspired by the iPhone with apps spread across multiple home screens.
+This is quite convenient and I find it more intuitive compared to the
+app drawer interface (ADW launcher/stock android launcher). A nice
+feature is a backup application built right out of the box that can do
+local and remote backups (I've not tested this entirely). The ROM also
+detects an Apps2SD partition and moves applications to the SD card if
+required. This is a huge plus for people who have phones with limited
+internal memory and small /data partitions (e.g. the HTC Desire). I was
+surprised to find that even with all UI effects, the phone is still very
+responsive and seems to &lt;em&gt;feel&lt;/em&gt; faster.
+The only minor issues I've faced so far are strange translation bugs
+(the ROM is originally Chinese with an added English language pack) and
+a missing weather application. The ROM is updated every Friday so the
+translation bugs should be fixed very soon.
+This is a really promising ROM that I hope to use for a long time.&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <title>Getting SmartVOIP to work on CM7</title>
+    <link href="http://riteshk.github.com/blog/2011/07/24/getting-smartvoip-to-work-on-cm7/"/>
+    <updated>2011-07-24T00:00:00+01:00</updated>
+    <id>http://riteshk.github.com/blog/2011/07/24/getting-smartvoip-to-work-on-cm7</id>
+    <content type="html">&lt;p&gt;Android 2.3 (Gingerbread) claims to support SIP natively. For some weird reason it does not play well with SmartVOIP, probably due to missing STUN server support. SmartVOIP provide a native android app called MobileVOIP but it doesn&amp;#39;t integrate with the Android UI. I found this nifty little app called CSipSimple(&lt;a href=&quot;http://code.google.com/p/csipsimple/&quot;&gt;http://code.google.com/p/csipsimple/&lt;/a&gt;) which has loads of configuration options (e.g. connect when on WiFi and or 3G etc). It integrates really well with the native CyanogenMod UI and seems to be working really well in my limited tests. It&amp;#39;s available on the android market by the same name. I finally decided to get rid of Skype from my phone as it tends to use a lot of memory and isn&amp;#39;t particularly cheap when calling other phones. &lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <title>Installing rubygems in your home folder</title>
+    <link href="http://riteshk.github.com/blog/2011/07/16/installing-rubygems-in-your-home-folder/"/>
+    <updated>2011-07-16T00:00:00+01:00</updated>
+    <id>http://riteshk.github.com/blog/2011/07/16/installing-rubygems-in-your-home-folder</id>
+    <content type="html">&lt;p&gt;No root? No problem! Obtain a copy of rubygems from ruby forge.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ tar xzvf rubygems-1.4.2 
+$ cd rubygems-1.4.2 
+$ ruby setup.rb --prefix=/your/home/folder/local 
+$ echo &quot;RUBYLIB=$HOME:/same/path/as/above/lib&quot; &amp;gt;&amp;gt; ~/.bash_profile 
+$ echo &quot;export RUBYLIB&quot; &amp;gt;&amp;gt; ~/.bash_profile 
+$ source ~/.bash_profile
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This should give you a working install of rubygems. Check out the environment&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ gem env 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Install something&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ gem install rake 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Enjoy!&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <title>cdecl</title>
+    <link href="http://riteshk.github.com/blog/2011/02/23/cdecl/"/>
+    <updated>2011-02-23T00:00:00+00:00</updated>
+    <id>http://riteshk.github.com/blog/2011/02/23/cdecl</id>
+    <content type="html">&lt;p&gt;Found this wonderful way to understand complicated C code. &lt;a href=&quot;&quot; title=&quot;http://www.cdecl.org&quot;&gt;Cdecl&lt;/a&gt;&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <title>Ben Goldacre: bad science kills</title>
+    <link href="http://riteshk.github.com/blog/2010/12/24/ben-goldacre-bad-science-kills/"/>
+    <updated>2010-12-24T00:00:00+00:00</updated>
+    <id>http://riteshk.github.com/blog/2010/12/24/ben-goldacre-bad-science-kills</id>
+    <content type="html">&lt;div class=&quot;posterous_bookmarklet_entry&quot;&gt;
+&lt;blockquote&gt;
+&lt;div&gt;
+&lt;blockquote&gt;
+&lt;p style=&quot;text-align: center;&quot;&gt;&amp;nbsp;&lt;/p&gt;
+Ben's book, oddly enough titled Bad Science, is great as well, and I highly recommend it. There's a chapter he had to take out due to litigation by a guy named Mathias Rath, who says vitamins can cure AIDS. Yes, you read that correctly. Ben posted that chapter on his website, and it may be one of the most important things ever written in the area of critical thinking. Lack of proper treatment for AIDS kills hundreds of thousands of people in Africa alone. Hundreds of thousands.
+&lt;p&gt;When people like Ben win, lives are saved. The more people who know about him, the better. He's a true hero of skepticism.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;a href=&quot;http://blogs.discovermagazine.com/badastronomy/2010/12/23/some-bad-science-can-make-you-laugh-and-some-kills/&quot;&gt;Some bad science can make you laugh, and some kills&lt;/a&gt;
+&lt;div&gt;&lt;em&gt;&amp;nbsp;&lt;/em&gt; 
+&lt;ul&gt;
+&lt;li&gt;via &lt;a href=&quot;http://feeds.boingboing.net/~r/boingboing/iBag/~3/P1eYo7Dq5Zc/ben-goldacre-bad-sci.html&quot;&gt;feeds.boingboing.net&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Interesting and funny video from Bad Science author Ben Goldacre.&lt;/p&gt;
+&lt;/div&gt;
+
+</content>
+  </entry>
+  
+  <entry>
+    <title>A bit of snow</title>
+    <link href="http://riteshk.github.com/blog/2010/11/27/a-bit-of-snow/"/>
+    <updated>2010-11-27T00:00:00+00:00</updated>
+    <id>http://riteshk.github.com/blog/2010/11/27/a-bit-of-snow</id>
+    <content type="html">&lt;p&gt;[[posterous-content:PSVhSZj9k0LWAx3tlMuu]]&lt;/p&gt;
+
+</content>
+  </entry>
+  
+  <entry>
+    <title>UltraVPN on Lucid Lynx</title>
+    <link href="http://riteshk.github.com/blog/2010/08/31/ultravpn-on-lucid-lynx/"/>
+    <updated>2010-08-31T00:00:00+01:00</updated>
+    <id>http://riteshk.github.com/blog/2010/08/31/ultravpn-on-lucid-lynx</id>
+    <content type="html">&lt;p&gt;I was trying to get UltraVPN to work on linux using the instructions found at  here  but I had no luck at all since the configuration files mentioned in the post are inaccessible. To get UltraVPN to work, the following steps worked for me.  # sudo apt-get install network-manager-openvpn  Next, grab a copy of the windows installer from the website named &quot;ultravpn-install.exe&quot;. To get the configuration files, open the file &quot;ultravpn-install.exe&quot; with archive manager. Extract the config folder somewhere (the location is not important). Click on the network icon on the systray and go to VPN connections -&amp;gt; Configure VPN. Select &quot;Import&quot; and provide the path of the client.ovpn file inside the config folder. Set the username and password accordingly (as registered on the UltraVPN website). You might want to restart network manager for it to work.  #sudo service network-manager restart  After this, you should have an option under VPN connections to connect to UltraVPN (or whatever you named it during the import). Click on it to connect.&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <title>My Current Google Reader stats</title>
+    <link href="http://riteshk.github.com/blog/2010/08/30/my-current-google-reader-stats/"/>
+    <updated>2010-08-30T00:00:00+01:00</updated>
+    <id>http://riteshk.github.com/blog/2010/08/30/my-current-google-reader-stats</id>
+    <content type="html">&lt;p&gt;[[posterous-content:HlGPkdboN2qDsab5x9xO]]My current google reader statistics, not too shabby eh?&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <title>Rubbish job opening</title>
+    <link href="http://riteshk.github.com/blog/2010/08/27/rubbish-job-opening/"/>
+    <updated>2010-08-27T00:00:00+01:00</updated>
+    <id>http://riteshk.github.com/blog/2010/08/27/rubbish-job-opening</id>
+    <content type="html">&lt;p&gt;Received an email today about a job opening at a major CMM level something company. Required skill : VMWare. Experience required 2 - 15 years. VMWare was founded in 1998, that gives us 12 years since it's been around. How does one have 15 years of experience with something that wasn't around until 12 years ago? Who writes these job descriptions?&lt;/p&gt;
+</content>
+  </entry>
+  
+</feed>

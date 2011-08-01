@@ -1,1 +1,565 @@
-My Octopress Page is coming soon &hellip;
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>My Blog</title>
+  <meta name="author" content="Ritesh Sinha">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+  <link rel="canonical" href="http://riteshk.github.com/index.html"/>
+  <link href="/favicon.png" rel="shortcut icon" />
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="http://s3.amazonaws.com/ender-js/jeesh.min.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <link href="/atom.xml" rel="alternate" title="My Blog" type="application/atom+xml"/>
+  
+
+  
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+  <!--Fonts from Google's Web font directory at http://google.com/webfonts -->
+<link href='http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+
+</head>
+
+<body  >
+  <header><hgroup>
+  <h1><a href="/">My Blog</a></h1>
+  
+    <h2>Random musings</h2>
+  
+</hgroup>
+</header>
+  <nav role=navigation><ul role=subscription data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="site-search">
+    <input type="hidden" name="q" value="site:riteshk.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul role=main-navigation>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+
+
+
+  <article>
+    
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/08/01/quick-twisted-adbapi-example/">Quick Twisted ADBAPI Example</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2011-08-01 18:42:00 +0100" pubdate  updated >Aug 1<span>st</span>, 2011</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I spent a fair amount of time trying to get
+<a href="" title="http://twistedmatrix.com/documents/11.0.0/api/twisted.enterprise.adbapi.html">adbapi</a> to work. I&#8217;m not a
+full time programmer so this might be a slightly stupid and contrived
+example but it works! Using the standard blocking API one would connect
+to a MySQLdb like this.</p>
+
+<div><figure role=code><figcaption><span>Regular DB access - regular.py </span></figcaption>
+ <div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+</pre></td><td class='code' width='100%'><pre><code class='py'><div class='line'><span class="kn">import</span> <span class="nn">MySQLdb</span>
+</div><div class='line'><span class="n">db</span> <span class="o">=</span> <span class="n">MySQLdb</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="s">&quot;foo&quot;</span><span class="p">,</span> <span class="n">passwd</span><span class="o">=</span><span class="s">&quot;bar&quot;</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s">&quot;whiz&quot;</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="s">&quot;bang&quot;</span><span class="p">)</span>
+</div><div class='line'><span class="n">r</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+</div><div class='line'><span class="n">r</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;SELECT id FROM blah&quot;</span><span class="p">)</span>
+</div><div class='line'><span class="n">rows</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+</div><div class='line'><span class="k">while</span> <span class="n">rows</span><span class="p">:</span>
+</div><div class='line'>    <span class="k">print</span> <span class="s">&quot;ID is </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</div><div class='line'>    <span class="n">rows</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+</div><div class='line'><span class="n">db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</div></code></pre></td></tr></table></div></figure></div>
+
+
+<p>The adbapi way to do this is</p>
+
+<div><figure role=code><figcaption><span>adbapi DB access - adbtest.py </span></figcaption>
+ <div class="highlight"><table cellpadding="0" cellspacing="0"><tr><td class="gutter"><pre class="line-numbers"><span class='line'>1</span>
+<span class='line'>2</span>
+<span class='line'>3</span>
+<span class='line'>4</span>
+<span class='line'>5</span>
+<span class='line'>6</span>
+<span class='line'>7</span>
+<span class='line'>8</span>
+<span class='line'>9</span>
+<span class='line'>10</span>
+<span class='line'>11</span>
+<span class='line'>12</span>
+</pre></td><td class='code' width='100%'><pre><code class='py'><div class='line'><span class="kn">from</span> <span class="nn">twisted.enterprise</span> <span class="kn">import</span> <span class="n">adbapi</span>
+</div><div class='line'><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+</div><div class='line'><span class="n">dbpool</span> <span class="o">=</span> <span class="n">adbapi</span><span class="o">.</span><span class="n">ConnectionPool</span><span class="p">(</span><span class="s">&quot;MySQLdb&quot;</span><span class="p">,</span> <span class="n">user</span> <span class="o">=</span> <span class="s">&quot;foo&quot;</span><span class="p">,</span> <span class="n">passwd</span><span class="o">=</span><span class="s">&quot;bar&quot;</span><span class="p">,</span><span class="n">host</span> <span class="o">=</span> <span class="s">&quot;whiz&quot;</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="s">&quot;bang&quot;</span><span class="p">)</span>
+</div><div class='line'><span class="k">def</span> <span class="nf">getstuff</span><span class="p">():</span>
+</div><div class='line'>    <span class="k">return</span> <span class="n">dbpool</span><span class="o">.</span><span class="n">runQuery</span><span class="p">(</span><span class="s">&quot;SELECT id FROM blah&quot;</span><span class="p">)</span>
+</div><div class='line'><span class="k">def</span> <span class="nf">printresult</span><span class="p">(</span><span class="n">ids</span><span class="p">):</span>
+</div><div class='line'>    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">ids</span><span class="p">:</span>
+</div><div class='line'>        <span class="k">print</span> <span class="n">item</span>
+</div><div class='line'><span class="k">def</span> <span class="nf">errhandler</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
+</div><div class='line'>    <span class="k">print</span> <span class="s">&quot;Oh Noes&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+</div><div class='line'><span class="n">getstuff</span><span class="p">()</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">printresult</span><span class="p">)</span><span class="o">.</span><span class="n">addErrback</span><span class="p">(</span><span class="n">errhandler</span><span class="p">)</span>
+</div><div class='line'><span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</div></code></pre></td></tr></table></div></figure></div>
+
+
+
+</div>
+  <footer>
+    <a rel="full-article" href="/blog/2011/08/01/quick-twisted-adbapi-example/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/07/26/the-miui-rom/">The MIUI ROM</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2011-07-26 22:54:00 +0100" pubdate  updated >Jul 26<span>th</span>, 2011</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Just installed the <a href="http://miuiandroid.com/">MIUI ROM</a> on my Android
+phone. I&#8217;d rooted my phone about 3 days after purchasing it and had been
+running CyanogenMod 7. CyanogenMod is a nice, stable ROM for people who
+want a no frills Android version which is closest to the stock Android
+distribution with a few improvements. On the other hand, the MIUI ROM
+contains lots of improvements over the stock distribution. The stock
+Android interface has been given a complete overhaul with custom theme
+elements that can be applied to almost every aspect of the UI
+(notification area, lockscreen image etc).
+My biggest gripe with CyanogenMod was the ADW launcher which would
+randomly disappear at times after I&#8217;d unlocked the phone and swiped
+somewhere on the homescreen. I believe this was a feature in ADW
+launcher but it annoyed me to great lengths as I&#8217;d end up losing the
+dialler application from the homescreen.
+The MIUI ROM has an app launcher of its own that is probably <del>a ripoff</del>
+inspired by the iPhone with apps spread across multiple home screens.
+This is quite convenient and I find it more intuitive compared to the
+app drawer interface (ADW launcher/stock android launcher). A nice
+feature is a backup application built right out of the box that can do
+local and remote backups (I&#8217;ve not tested this entirely). The ROM also
+detects an Apps2SD partition and moves applications to the SD card if
+required. This is a huge plus for people who have phones with limited
+internal memory and small /data partitions (e.g. the HTC Desire). I was
+surprised to find that even with all UI effects, the phone is still very
+responsive and seems to <em>feel</em> faster.
+The only minor issues I&#8217;ve faced so far are strange translation bugs
+(the ROM is originally Chinese with an added English language pack) and
+a missing weather application. The ROM is updated every Friday so the
+translation bugs should be fixed very soon.
+This is a really promising ROM that I hope to use for a long time.</p>
+</div>
+  <footer>
+    <a rel="full-article" href="/blog/2011/07/26/the-miui-rom/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/07/24/getting-smartvoip-to-work-on-cm7/">Getting SmartVOIP to Work on CM7</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2011-07-24 00:00:00 +0100" pubdate  updated >Jul 24<span>th</span>, 2011</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Android 2.3 (Gingerbread) claims to support SIP natively. For some weird reason it does not play well with SmartVOIP, probably due to missing STUN server support. SmartVOIP provide a native android app called MobileVOIP but it doesn&#39;t integrate with the Android UI. I found this nifty little app called CSipSimple(<a href="http://code.google.com/p/csipsimple/">http://code.google.com/p/csipsimple/</a>) which has loads of configuration options (e.g. connect when on WiFi and or 3G etc). It integrates really well with the native CyanogenMod UI and seems to be working really well in my limited tests. It&#39;s available on the android market by the same name. I finally decided to get rid of Skype from my phone as it tends to use a lot of memory and isn&#39;t particularly cheap when calling other phones. </p>
+</div>
+  <footer>
+    <a rel="full-article" href="/blog/2011/07/24/getting-smartvoip-to-work-on-cm7/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/07/16/installing-rubygems-in-your-home-folder/">Installing Rubygems in Your Home Folder</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2011-07-16 00:00:00 +0100" pubdate  updated >Jul 16<span>th</span>, 2011</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>No root? No problem! Obtain a copy of rubygems from ruby forge.</p>
+
+<pre><code>$ tar xzvf rubygems-1.4.2 
+$ cd rubygems-1.4.2 
+$ ruby setup.rb --prefix=/your/home/folder/local 
+$ echo "RUBYLIB=$HOME:/same/path/as/above/lib" &gt;&gt; ~/.bash_profile 
+$ echo "export RUBYLIB" &gt;&gt; ~/.bash_profile 
+$ source ~/.bash_profile
+</code></pre>
+
+<p>This should give you a working install of rubygems. Check out the environment</p>
+
+<pre><code>$ gem env 
+</code></pre>
+
+<p>Install something</p>
+
+<pre><code>$ gem install rake 
+</code></pre>
+
+<p>Enjoy!</p>
+</div>
+  <footer>
+    <a rel="full-article" href="/blog/2011/07/16/installing-rubygems-in-your-home-folder/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/02/23/cdecl/">Cdecl</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2011-02-23 00:00:00 +0000" pubdate  updated >Feb 23<span>rd</span>, 2011</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Found this wonderful way to understand complicated C code. <a href="" title="http://www.cdecl.org">Cdecl</a></p>
+</div>
+  <footer>
+    <a rel="full-article" href="/blog/2011/02/23/cdecl/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/12/24/ben-goldacre-bad-science-kills/">Ben Goldacre: Bad Science Kills</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2010-12-24 00:00:00 +0000" pubdate  updated >Dec 24<span>th</span>, 2010</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><div class="posterous_bookmarklet_entry">
+<blockquote>
+<div>
+<blockquote>
+<p style="text-align: center;">&nbsp;</p>
+Ben&#8217;s book, oddly enough titled Bad Science, is great as well, and I highly recommend it. There&#8217;s a chapter he had to take out due to litigation by a guy named Mathias Rath, who says vitamins can cure AIDS. Yes, you read that correctly. Ben posted that chapter on his website, and it may be one of the most important things ever written in the area of critical thinking. Lack of proper treatment for AIDS kills hundreds of thousands of people in Africa alone. Hundreds of thousands.
+<p>When people like Ben win, lives are saved. The more people who know about him, the better. He&#8217;s a true hero of skepticism.</p>
+</blockquote>
+<a href="http://blogs.discovermagazine.com/badastronomy/2010/12/23/some-bad-science-can-make-you-laugh-and-some-kills/">Some bad science can make you laugh, and some kills</a>
+<div><em>&nbsp;</em> 
+<ul>
+<li>via <a href="http://feeds.boingboing.net/~r/boingboing/iBag/~3/P1eYo7Dq5Zc/ben-goldacre-bad-sci.html">feeds.boingboing.net</a></li>
+</ul>
+</div>
+</div>
+</blockquote>
+<p>Interesting and funny video from Bad Science author Ben Goldacre.</p>
+</div>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/blog/2010/12/24/ben-goldacre-bad-science-kills/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/11/27/a-bit-of-snow/">A Bit of Snow</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2010-11-27 00:00:00 +0000" pubdate  updated >Nov 27<span>th</span>, 2010</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>[[posterous-content:PSVhSZj9k0LWAx3tlMuu]]</p>
+
+</div>
+  <footer>
+    <a rel="full-article" href="/blog/2010/11/27/a-bit-of-snow/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/08/31/ultravpn-on-lucid-lynx/">UltraVPN on Lucid Lynx</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2010-08-31 00:00:00 +0100" pubdate  updated >Aug 31<span>st</span>, 2010</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I was trying to get UltraVPN to work on linux using the instructions found at  here  but I had no luck at all since the configuration files mentioned in the post are inaccessible. To get UltraVPN to work, the following steps worked for me.  # sudo apt-get install network-manager-openvpn  Next, grab a copy of the windows installer from the website named &#8220;ultravpn-install.exe&#8221;. To get the configuration files, open the file &#8220;ultravpn-install.exe&#8221; with archive manager. Extract the config folder somewhere (the location is not important). Click on the network icon on the systray and go to VPN connections -&gt; Configure VPN. Select &#8220;Import&#8221; and provide the path of the client.ovpn file inside the config folder. Set the username and password accordingly (as registered on the UltraVPN website). You might want to restart network manager for it to work.  #sudo service network-manager restart  After this, you should have an option under VPN connections to connect to UltraVPN (or whatever you named it during the import). Click on it to connect.</p>
+</div>
+  <footer>
+    <a rel="full-article" href="/blog/2010/08/31/ultravpn-on-lucid-lynx/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/08/30/my-current-google-reader-stats/">My Current Google Reader Stats</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2010-08-30 00:00:00 +0100" pubdate  updated >Aug 30<span>th</span>, 2010</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>[[posterous-content:HlGPkdboN2qDsab5x9xO]]My current google reader statistics, not too shabby eh?</p>
+</div>
+  <footer>
+    <a rel="full-article" href="/blog/2010/08/30/my-current-google-reader-stats/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+
+  <article>
+    
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/08/27/rubbish-job-opening/">Rubbish Job Opening</a></h1>
+    
+    
+      <p class="meta">
+
+
+
+
+<time datetime="2010-08-27 00:00:00 +0100" pubdate  updated >Aug 27<span>th</span>, 2010</time>
+
+
+</p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Received an email today about a job opening at a major CMM level something company. Required skill : VMWare. Experience required 2 - 15 years. VMWare was founded in 1998, that gives us 12 years since it&#8217;s been around. How does one have 15 years of experience with something that wasn&#8217;t around until 12 years ago? Who writes these job descriptions?</p>
+</div>
+  <footer>
+    <a rel="full-article" href="/blog/2010/08/27/rubbish-job-opening/">Read on &rarr;</a>
+  </footer>
+
+
+  </article>
+
+<nav role="pagination">
+  <div>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+  </div>
+</nav>
+
+</div>
+<aside role=sidebar>
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2011/08/01/quick-twisted-adbapi-example/">Quick Twisted ADBAPI Example</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/07/26/the-miui-rom/">The MIUI ROM</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/07/24/getting-smartvoip-to-work-on-cm7/">Getting SmartVOIP to work on CM7</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/07/16/installing-rubygems-in-your-home-folder/">Installing rubygems in your home folder</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/02/23/cdecl/">cdecl</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer><p>
+  Copyright &copy; 2011 - Ritesh Sinha -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+</body>
+</html>
